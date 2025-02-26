@@ -17,11 +17,14 @@ func _ready() -> void:
 
 
 func _on_timer_timeout() -> void:
-	var spawn = spawn_points.pick_random()
-	var goblin = goblin_scene.instantiate()
-	goblin.position = spawn.position
-	goblin.hit_player.connect(hit)
-	main.add_child(goblin)
+	var enemies = get_tree().get_nodes_in_group("enemies")
+	if enemies.size() < get_parent().max_enemies:
+			var spawn = spawn_points.pick_random()
+			var goblin = goblin_scene.instantiate()
+			goblin.position = spawn.position
+			goblin.hit_player.connect(hit)
+			main.add_child(goblin)
+			goblin.add_to_group("enemies")
 
 func hit():
 	hit_p.emit()

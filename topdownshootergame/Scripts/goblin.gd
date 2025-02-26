@@ -22,11 +22,14 @@ func _ready() -> void:
 		direction.y = dist.y
 
 func _physics_process(delta: float) -> void:
+	$AnimatedSprite2D.animation = "run"
 	if entered:
 		direction = (player.position - position)
 	direction = direction.normalized()
 	velocity = direction * speed
 	move_and_slide()
+	if velocity.x != 0:
+		$AnimatedSprite2D.flip_h = velocity.x < 0
 
 
 func _on_enterance_timer_timeout() -> void:
