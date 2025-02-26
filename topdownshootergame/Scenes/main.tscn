@@ -1,9 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://dax2rvilg6pvd"]
+[gd_scene load_steps=7 format=3 uid="uid://dax2rvilg6pvd"]
 
 [ext_resource type="PackedScene" uid="uid://dg632jcik6ree" path="res://Scenes/world.tscn" id="1_erhlb"]
 [ext_resource type="Script" path="res://Scripts/main.gd" id="1_is448"]
 [ext_resource type="PackedScene" uid="uid://chc8g1bqkqsgi" path="res://Scenes/player.tscn" id="2_g1we3"]
 [ext_resource type="PackedScene" uid="uid://balsjfts013as" path="res://Scenes/enemy_spawner.tscn" id="3_xcjom"]
+[ext_resource type="Script" path="res://Scripts/bullet_manager.gd" id="4_ft6a3"]
+[ext_resource type="PackedScene" uid="uid://bx7setcsbasdb" path="res://Scenes/bullet.tscn" id="5_hrras"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_is448")
@@ -12,6 +14,11 @@ script = ExtResource("1_is448")
 
 [node name="Player" parent="." instance=ExtResource("2_g1we3")]
 
+[node name="BulletManager" type="Node2D" parent="."]
+script = ExtResource("4_ft6a3")
+bullet_scene = ExtResource("5_hrras")
+
 [node name="EnemySpawner" parent="." instance=ExtResource("3_xcjom")]
 
+[connection signal="shoot" from="Player" to="BulletManager" method="_on_player_shoot"]
 [connection signal="hit_p" from="EnemySpawner" to="." method="_on_enemy_spawner_hit_p"]
